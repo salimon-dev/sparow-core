@@ -1,0 +1,37 @@
+version: "3.1"
+services:
+  # postgres service, you can comment it if you aleardy have a postgress instance to connect
+  pgsql:
+    container_name: pgsql
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "root_password"
+      POSTGRES_USER: "root"
+      POSTGRES_DB: "sparow"
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pgsql-data:/var/lib/postgresql/data
+    networks:
+      - sparow-core
+  # main service of sparow
+  core:
+    container_name: core
+    build: ./
+    restart: always
+    volumes:
+      - ./:/var/www/html
+      - /var/www/html/vendor
+      - /var/www/html/node_modules
+    ports:
+      - 5000:80
+      - 6001:6001
+    networks:
+      - sparow-core
+    depends_on:
+      - pgsql
+
+networks:
+  sparow-core:
+    external: false
