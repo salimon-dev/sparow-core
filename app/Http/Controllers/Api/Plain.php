@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Plain\Login as LoginRequest;
 use App\Http\Requests\Api\Plain\Register as RegisterRequest;
-use App\Http\Resources\Profile;
+use App\Http\Resources\Profile as Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
