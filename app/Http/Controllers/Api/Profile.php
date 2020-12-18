@@ -33,4 +33,9 @@ class Profile extends Controller
         $user->save();
         return ResourcesProfile::make($user);
     }
+    public function logout()
+    {
+        Auth::user()->token()->delete();
+        return 'ok';
+    }
 }
