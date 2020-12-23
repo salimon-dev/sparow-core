@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateProfile;
 use App\Http\Resources\Profile as ResourcesProfile;
+use App\Jobs\ProfileUpdated;
 use Auth;
 
 class Profile extends Controller
@@ -31,6 +32,7 @@ class Profile extends Controller
             $user->avatar = Storage::disk('arvan-s3')->put('/avatars', $request->file('avatar'));
         }
         $user->save();
+        dispatch(new ProfileUpdated());
         return ResourcesProfile::make($user);
     }
     public function logout()
