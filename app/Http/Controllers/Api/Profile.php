@@ -32,7 +32,7 @@ class Profile extends Controller
             $user->avatar = Storage::disk('arvan-s3')->put('/avatars', $request->file('avatar'));
         }
         $user->save();
-        dispatch(new ProfileUpdated());
+        dispatch(new ProfileUpdated($user->id));
         return ResourcesProfile::make($user);
     }
     public function logout()

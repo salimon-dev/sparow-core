@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Log;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,15 +12,15 @@ use Illuminate\Queue\SerializesModels;
 class ProfileUpdated implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $user_id;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user_id)
     {
-        //
+        $this->user_id = $user_id;
     }
 
     /**
@@ -32,15 +32,19 @@ class ProfileUpdated implements ShouldQueue
     {
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_PORT => "5002",
-            CURLOPT_URL => "http://bell:5002/emit",
+            CURLOPT_PORT => env("BROKER_PORT"),
+            CURLOPT_URL => env("BORKER_URL"),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{\"token\": \"test-auth-token\",\"data\": \"here is some data\",\"channel\": \"project.3\",\"event\": \"profile_update\"}",
+            CURLOPT_POSTFIELDS => json_encode([
+                "token" => "test-auth-token",
+                "data" => "here is some data",
+                "channel" => "profile:" . $this->user_id,
+            ]),
             CURLOPT_HTTPHEADER => [
                 "Content-Type: application/json"
             ],
@@ -49,9 +53,9 @@ class ProfileUpdated implements ShouldQueue
         $err = curl_error($curl);
         curl_close($curl);
         if ($err) {
-            echo "cURL Error #:" . $err;
+            Log::error("cURL Error #:" . $err);
         } else {
-            echo $response;
+            Log::info($response);
         }
     }
 }
