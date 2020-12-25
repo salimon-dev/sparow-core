@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Http\Resources\Profile;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Log;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -30,6 +32,7 @@ class ProfileUpdated implements ShouldQueue
      */
     public function handle()
     {
+        $user = User::find($this->user_id);
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_PORT => env("BROKER_PORT"),
@@ -42,7 +45,8 @@ class ProfileUpdated implements ShouldQueue
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode([
                 "token" => "test-auth-token",
-                "data" => "here is some data",
+                "data" => Profile::make($user),
+                "event" => "profile_update",
                 "channel" => "profile:" . $this->user_id,
             ]),
             CURLOPT_HTTPHEADER => [
