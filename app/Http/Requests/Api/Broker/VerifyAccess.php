@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\Plain;
+namespace App\Http\Requests\Api\Broker;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Auth;
 
-class Register extends FormRequest
+class VerifyAccess extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +26,7 @@ class Register extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|string|unique:users|max:64',
-            'password' => 'required|string',
-            'email' => 'required|email|max:64|unique:users',
-            'phone' => 'nullable|string|max:20|unique:users',
-            'avatar' => 'nullable|file|max:2500'
+            'channel' => 'required|string',
         ];
     }
 }
