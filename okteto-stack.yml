@@ -1,0 +1,11 @@
+name: sparow-core
+services:
+  sparow-core:
+    public: true
+    image: salimondev/sparow-core:latest
+    replicas: 1
+    ports:
+      - 80
+    resources:
+      cpu: 300m
+      memory: 500Mi
