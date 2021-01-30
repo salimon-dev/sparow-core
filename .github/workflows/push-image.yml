@@ -37,3 +37,5 @@ jobs:
           namespace: mr-exception
         env:
           APP_NAME: sparow-core
+          DB_USERNAME: ${{ secrets.PGSQL_USERNAME }}
+          DB_PASSWORD: ${{ secrets.PGSQL_PASSWORD }}
