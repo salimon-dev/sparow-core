@@ -35,3 +35,5 @@ jobs:
         with:
           build: true
           namespace: mr-exception
+        env:
+          APP_NAME: sparow-core
