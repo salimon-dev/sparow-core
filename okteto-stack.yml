@@ -3,6 +3,8 @@ services:
   sparow-core:
     public: true
     image: salimondev/sparow-core:latest
+    environment:
+      APP_NAME: "sparow"
     replicas: 1
     ports:
       - 80
