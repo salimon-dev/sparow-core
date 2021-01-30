@@ -61,6 +61,7 @@ WORKDIR /var/www/html/
 COPY ./ ./
 RUN composer install
 RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 777 storage
 
 # initialize enviroments
 RUN cp .env.example .env
