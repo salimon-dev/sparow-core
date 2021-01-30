@@ -18,13 +18,14 @@ services:
     container_name: sparow_core
     build: ./
     restart: always
+    environment:
+      APP_NAME: "salimon"
     volumes:
       - ./:/var/www/html
       - /var/www/html/vendor
       - /var/www/html/node_modules
     ports:
       - 5000:80
-      - 6001:6001
     depends_on:
       - pgsql
 

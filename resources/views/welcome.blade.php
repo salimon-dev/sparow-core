@@ -1,1 +1,1 @@
-hello! I'm a sparow
+appname: {{env('APP_NAME')}}

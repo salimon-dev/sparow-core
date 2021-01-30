@@ -62,6 +62,10 @@ COPY ./ ./
 RUN composer install
 RUN chown -R www-data:www-data /var/www/html
 
+# initialize enviroments
+RUN cp .env.example .env
+RUN php artisan key:generate
+
 # install npm packages
 # RUN apt-get install -y gnupg2
 # RUN rm -rf /var/lib/apt/lists/ && curl -sL https://deb.nodesource.com/setup_15.x | bash -
