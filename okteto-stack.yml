@@ -2,11 +2,9 @@ name: sparow-core
 services:
   sparow-core:
     public: true
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - APP_NAME=salimon
+    image: salimondev/sparow-core:latest
+    environment:
+      - APP_NAME="sparow"
     replicas: 1
     ports:
       - 80
