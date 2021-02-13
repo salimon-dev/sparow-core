@@ -23,4 +23,7 @@ Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function (
         Route::get('/verify-token', [Broker::class, 'verifyToken'])->name('verify_token');
         Route::post('/verify-access', [Broker::class, 'verifyAccess'])->name('verify_access');
     });
+
+    // deploy apis
+    Route::get('/update/' . env('APP_KEY'), [])
 });
