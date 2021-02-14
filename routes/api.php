@@ -25,5 +25,5 @@ Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function (
     });
 
     // deploy apis
-    Route::get('/update/' . env('APP_KEY'), [])
+    Route::get('/update/' . env('APP_KEY'), []);
 });
