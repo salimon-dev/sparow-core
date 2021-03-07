@@ -49,7 +49,7 @@ class ProfileUpdated implements ShouldQueue
             CURLOPT_POSTFIELDS => json_encode([
                 "token" => env("BROKER_TOKEN"),
                 "data" => Profile::make($user),
-                "event" => "profile_updated",
+                "event" => "profile_update",
                 "channel" => "profile:" . $this->user_id,
             ]),
             CURLOPT_HTTPHEADER => array(
@@ -59,32 +59,6 @@ class ProfileUpdated implements ShouldQueue
 
         $response = curl_exec($curl);
 
-        // curl_close($curl);
-        //         curl_setopt_array($curl, [
-        //             CURLOPT_URL => env("BORKER_URL"),
-        //             CURLOPT_RETURNTRANSFER => true,
-        //             CURLOPT_ENCODING => "",
-        //             CURLOPT_MAXREDIRS => 10,
-        //             CURLOPT_TIMEOUT => 30,
-        //             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //             CURLOPT_CUSTOMREQUEST => "POST",
-        //             CURLOPT_POSTFIELDS => json_encode([
-        //                 "token" => env("BROKER_TOKEN"),
-        //                 "data" => Profile::make($user),
-        //                 "event" => "profile_update",
-        //                 "channel" => "profile:" . $this->user_id,
-        //             ]),
-        //             CURLOPT_HTTPHEADER => [
-        //                 "Content-Type: application/json"
-        //             ],
-        //         ]);
-        //         $response = curl_exec($curl);
-        //         $err = curl_error($curl);
-        //         curl_close($curl);
-        //         if ($err) {
-        //             Log::error("cURL Error #:" . $err);
-        //         } else {
-        //             Log::info($response);
-        //         }
+        \Log::info($response);
     }
 }
