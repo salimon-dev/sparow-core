@@ -34,31 +34,52 @@ class ProfileUpdated implements ShouldQueue
     {
         $user = User::find($this->user_id);
         $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => env("BORKER_URL"),
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://salimon.ir:5002/emit',
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
+            CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => json_encode([
-                "token" => env("BROKER_TOKEN"),
-                "data" => Profile::make($user),
-                "event" => "profile_update",
-                "channel" => "profile:" . $this->user_id,
-            ]),
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json"
-            ],
-        ]);
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{"token": "test-token","data": {"foo": "bar"},"event": "profile_updated","channel": "profile.0"}',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+
         $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-            Log::error("cURL Error #:" . $err);
-        } else {
-            Log::info($response);
-        }
+
+        // curl_close($curl);
+        //         curl_setopt_array($curl, [
+        //             CURLOPT_URL => env("BORKER_URL"),
+        //             CURLOPT_RETURNTRANSFER => true,
+        //             CURLOPT_ENCODING => "",
+        //             CURLOPT_MAXREDIRS => 10,
+        //             CURLOPT_TIMEOUT => 30,
+        //             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //             CURLOPT_CUSTOMREQUEST => "POST",
+        //             CURLOPT_POSTFIELDS => json_encode([
+        //                 "token" => env("BROKER_TOKEN"),
+        //                 "data" => Profile::make($user),
+        //                 "event" => "profile_update",
+        //                 "channel" => "profile:" . $this->user_id,
+        //             ]),
+        //             CURLOPT_HTTPHEADER => [
+        //                 "Content-Type: application/json"
+        //             ],
+        //         ]);
+        //         $response = curl_exec($curl);
+        //         $err = curl_error($curl);
+        //         curl_close($curl);
+        //         if ($err) {
+        //             Log::error("cURL Error #:" . $err);
+        //         } else {
+        //             Log::info($response);
+        //         }
     }
 }
