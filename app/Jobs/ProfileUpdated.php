@@ -46,7 +46,12 @@ class ProfileUpdated implements ShouldQueue
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{"token": "test-token","data": {"foo": "bar"},"event": "profile_updated","channel": "profile.0"}',
+            CURLOPT_POSTFIELDS => json_encode([
+                "token" => "test-token",
+                "data" => ["foo" => "bar"],
+                "event" => "profile_updated",
+                "channel" => "profile.0",
+            ]),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
             ),
