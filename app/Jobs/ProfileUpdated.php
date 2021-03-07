@@ -48,7 +48,7 @@ class ProfileUpdated implements ShouldQueue
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode([
                 "token" => env("BROKER_TOKEN"),
-                "data" => ["foo" => "bar"],
+                "data" => Profile::make($user),
                 "event" => "profile_updated",
                 "channel" => "profile:" . $this->user_id,
             ]),
