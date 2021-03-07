@@ -38,7 +38,7 @@ class ProfileUpdated implements ShouldQueue
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://salimon.ir:5002/emit',
+            CURLOPT_URL => env("BROKER_URL"),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -47,10 +47,10 @@ class ProfileUpdated implements ShouldQueue
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode([
-                "token" => "test-token",
+                "token" => env("BROKER_TOKEN"),
                 "data" => ["foo" => "bar"],
                 "event" => "profile_updated",
-                "channel" => "profile.0",
+                "channel" => "profile:" . $this->user_id,
             ]),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
