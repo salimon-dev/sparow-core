@@ -35,7 +35,6 @@ class ProfileUpdated implements ShouldQueue
         $user = User::find($this->user_id);
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_PORT => env("BROKER_PORT"),
             CURLOPT_URL => env("BORKER_URL"),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -44,7 +43,7 @@ class ProfileUpdated implements ShouldQueue
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode([
-                "token" => "test-auth-token",
+                "token" => env("BROKER_TOKEN"),
                 "data" => Profile::make($user),
                 "event" => "profile_update",
                 "channel" => "profile:" . $this->user_id,
