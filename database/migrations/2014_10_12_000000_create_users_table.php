@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->string('status', 32)->default('pending');
+            $table->boolean("can_create_client")->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
