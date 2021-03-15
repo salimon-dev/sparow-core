@@ -19,6 +19,7 @@ class CreateApplicationsTable extends Migration
             $table->string('description', 256)->nullable();
             $table->string('secret_token', 128)->nullable();
             $table->string('public_token', 256)->nullable();
+            $table->uuid('user_id');
             $table->timestamps();
         });
     }
