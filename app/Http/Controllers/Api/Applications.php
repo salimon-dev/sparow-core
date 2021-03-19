@@ -6,12 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Applications\Create;
 use App\Http\Requests\Api\Applications\Edit;
 use App\Http\Requests\Api\Applications\Index;
-use App\Http\Requests\Api\UpdateProfile;
 use App\Http\Resources\Application as ResourcesApplication;
-use App\Http\Resources\Profile as ResourcesProfile;
-use App\Jobs\ProfileUpdated;
 use App\Models\Application;
-use App\Models\Passport\Token;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -55,5 +51,11 @@ class Applications extends Controller
         $application->fill($request->only(['title', 'description']));
         $application->save();
         return ResourcesApplication::make($application);
+    }
+
+    public function delete(Request $request, Application $application)
+    {
+        $application->delete();
+        return 'ok';
     }
 }
