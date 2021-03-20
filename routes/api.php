@@ -26,17 +26,17 @@ Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function (
             Route::delete("/{token}", [Sessions::class, "delete"])->name("delete");
         });
         Route::name("applications.")->prefix("/applications")->group(function () {
-            Route::get("/", [Applications::class, "index"])->name("index");
-            Route::post("/", [Applications::class, "create"])->name("create");
-            Route::post("/{application}", [Applications::class, "edit"])->name("edit");
-            Route::delete("/{application}", [Applications::class, "delete"])->name("delete");
-            Route::post("/{application}/refresh-token", [Applications::class, "refreshToken"])->name("refreshToken");
+            Route::get("/", [Applications::class, "index"])->name("index")->middleware("can:index");
+            Route::post("/", [Applications::class, "create"])->name("create")->middleware("can:create");
+            Route::post("/{application}", [Applications::class, "edit"])->name("edit")->middleware("can:update,application");
+            Route::delete("/{application}", [Applications::class, "delete"])->name("delete")->middleware("can:delete,application");
+            Route::post("/{application}/refresh-token", [Applications::class, "refreshToken"])->name("refreshToken")->middleware("can:refreshToken,application");
         });
         Route::name("redirect_urls")->prefix("/redirect-urls")->group(function () {
-            Route::get("/", [RedirectUrls::class, "index"])->name("index");
-            Route::post("/", [RedirectUrls::class, "create"])->name("create");
-            Route::post("/{redirect_url}", [RedirectUrls::class, "edit"])->name("edit");
-            Route::delete("/{redirect_url}", [RedirectUrls::class, "delete"])->name("delete");
+            Route::get("/", [RedirectUrls::class, "index"])->name("index")->middleware("can:index");
+            Route::post("/", [RedirectUrls::class, "create"])->name("create")->middleware("can:create");
+            Route::post("/{redirect_url}", [RedirectUrls::class, "edit"])->name("edit")->middleware("can:edit,redirect_url");
+            Route::delete("/{redirect_url}", [RedirectUrls::class, "delete"])->name("delete")->middleware("can:delete,redirect_url");
         });
         Route::post('/logout', [Profile::class, 'logout'])->name('logout');
     });
