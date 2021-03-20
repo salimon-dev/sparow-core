@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Session;
 use App\Models\Passport\Token;
 use Auth;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class Sessions extends Controller
 {
     public function list(Request $request)
     {
-        return Auth::user()->tokens()->get();
+        return Session::collection(Auth::user()->tokens()->paginate());
     }
     public function delete(Request $request, Token $token)
     {
