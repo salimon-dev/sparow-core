@@ -21,7 +21,8 @@ Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function (
         });
         Route::name("sessions.")->prefix("/sessions")->group(function () {
             Route::get("/", [Sessions::class, "list"])->name("list");
-            Route::delete("/{id}", [Sessions::class, "delete"])->name("delete");
+            Route::delete("/all-but-me", [Sessions::class, "deleteAllButMe"])->name("deleteAllButMe");
+            Route::delete("/{token}", [Sessions::class, "delete"])->name("delete");
         });
         Route::name("applications.")->prefix("/applications")->group(function () {
             Route::get("/", [Applications::class, "index"])->name("index");
