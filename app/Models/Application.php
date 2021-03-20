@@ -16,4 +16,9 @@ class Application extends Model
     {
         return $query->where('user_id', Auth::user()->id);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_id");
+    }
 }

@@ -58,4 +58,14 @@ class Applications extends Controller
         $application->delete();
         return 'ok';
     }
+
+    public function refreshToken(Request $request, Application $application)
+    {
+        $application->fill([
+            'secret_token' => $this->randomString(128),
+            'public_token' => $this->randomString(256),
+        ]);
+        $application->save();
+        return ResourcesApplication::make($application);
+    }
 }

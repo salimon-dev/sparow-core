@@ -10,17 +10,8 @@ use App\Traits\Uuids;
 class ValidDomain extends Model
 {
     use HasFactory, Uuids;
-
-    //================================================ relationships =========================================================
-
-    /**
-     * Get the client that owns the redirect url.
-     */
-    public function client()
+    public function application()
     {
-        return $this->belongsTo(Client::class, 'oauth_clients_id', 'id');
+        return $this->belongsTo(Application::class, "application_id");
     }
-    //================================================ mutators =========================================================
-
-    //================================================ scopes =========================================================
 }

@@ -15,7 +15,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable, Uuids, HasApiTokens, CustomizedCreateToken;
 
     protected $fillable = [
-        'username', 'email', 'phone', 'first_name', 'last_name', 'avatar', 'phone_verified_at', 'email_verified_at', 'last_login', 'status', "can_create_client"
+        'username', 'email', 'phone', 'first_name', 'last_name', 'avatar', 'phone_verified_at', 'email_verified_at', 'last_login', 'status'
     ];
     protected $hidden = [
         'password',

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Applications;
 use App\Http\Controllers\Api\Broker;
 use App\Http\Controllers\Api\Plain;
 use App\Http\Controllers\Api\Profile;
+use App\Http\Controllers\Api\RedirectUrls;
 use App\Http\Controllers\Api\Sessions;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,12 @@ Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function (
             Route::post("/{application}", [Applications::class, "edit"])->name("edit");
             Route::delete("/{application}", [Applications::class, "delete"])->name("delete");
             Route::post("/{application}/refresh-token", [Applications::class, "refreshToken"])->name("refreshToken");
+        });
+        Route::name("redirect_urls")->prefix("/redirect-urls")->group(function () {
+            Route::get("/", [RedirectUrls::class, "index"])->name("index");
+            Route::post("/", [RedirectUrls::class, "create"])->name("create");
+            Route::post("/{redirect_url}", [RedirectUrls::class, "edit"])->name("edit");
+            Route::delete("/{redirect_url}", [RedirectUrls::class, "delete"])->name("delete");
         });
         Route::post('/logout', [Profile::class, 'logout'])->name('logout');
     });
