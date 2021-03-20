@@ -26,9 +26,11 @@ class Login extends FormRequest
         return [
             'username' => 'required|string|max:64',
             'password' => 'required|string',
+            // set 3rd party infor
             'application_token' => 'nullable|string|max:256',
             'scopes' => 'nullable|array',
-            'scopes.*' => 'required|string'
+            'scopes.*' => 'required|string',
+            'agent' => 'required|string|max:128',
         ];
     }
 }

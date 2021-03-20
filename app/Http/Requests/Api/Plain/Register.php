@@ -28,7 +28,12 @@ class Register extends FormRequest
             'password' => 'required|string',
             'email' => 'required|email|max:64|unique:users',
             'phone' => 'nullable|string|max:20|unique:users',
-            'avatar' => 'nullable|file|max:2500'
+            'avatar' => 'nullable|file|max:2500',
+            // set 3rd party infor
+            'application_token' => 'nullable|string|max:256',
+            'scopes' => 'nullable|array',
+            'scopes.*' => 'required|string',
+            'agent' => 'required|string|max:128',
         ];
     }
 }
