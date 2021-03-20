@@ -36,5 +36,15 @@ class AuthServiceProvider extends ServiceProvider
         Passport::useClientModel(Client::class);
         Passport::useAuthCodeModel(AuthCode::class);
         Passport::usePersonalAccessClientModel(PersonalAccessClient::class);
+
+        Passport::tokensCan([
+            "info" => "info",
+            "payment" => "payment",
+            "applications" => "applications"
+        ]);
+
+        Passport::setDefaultScope([
+            "info" => "info"
+        ]);
     }
 }

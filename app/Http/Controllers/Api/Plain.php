@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Plain\Login as LoginRequest;
 use App\Http\Requests\Api\Plain\Register as RegisterRequest;
 use App\Http\Resources\Profile as Profile;
+use App\Models\Application;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +18,13 @@ class Plain extends Controller
         if (!$user)
             return abort(401);
         else {
-            $token = $user->createToken($request->input('application', 'direct'));
+            $token = null;
+            if ($request->has('application_token')) {
+                $application = Application::where('public_token', $request->application_token)->firstOrFail();
+                $token = $user->createTokenWithApplicationId($request->input('application', 'direct'), $request->input('scopes', []), $application->id);
+            } else {
+                $token = $user->createTokenWithApplicationId($request->input('application', 'direct'), $request->input('scopes', []), null);
+            }
             return new Profile($user, [
                 'access_token' => $token->accessToken,
                 'expires_at' => $token->token->expires_at->timestamp,
@@ -33,7 +40,7 @@ class Plain extends Controller
             $user->avatar = Storage::disk('arvan-s3')->put('/avatars', $request->file('avatar'));
         }
         $user->save();
-        $token = $user->createToken($request->input('application', 'direct'));
+        $token = $user->createTokenWithApplicationId($request->input('application', 'direct'), $request->input("scopes", []), null);
         return new Profile($user, [
             'access_token' => $token->accessToken,
             'expires_at' => $token->token->expires_at->timestamp,

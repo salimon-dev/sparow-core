@@ -18,7 +18,7 @@ class Application extends JsonResource
             'description' => $this->description,
             'tokens' => [
                 'public' => $this->public_token,
-                'secret' => $this->secret,
+                'secret' => $this->secret_token,
             ],
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

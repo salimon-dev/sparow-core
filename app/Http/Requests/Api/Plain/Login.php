@@ -26,6 +26,9 @@ class Login extends FormRequest
         return [
             'username' => 'required|string|max:64',
             'password' => 'required|string',
+            'application_token' => 'nullable|string|max:256',
+            'scopes' => 'nullable|array',
+            'scopes.*' => 'required|string'
         ];
     }
 }
