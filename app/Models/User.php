@@ -54,4 +54,27 @@ class User extends Authenticatable
         $contents = file_get_contents($url);
         return $this->updateAvatar($contents);
     }
+    /**
+     * relation to user permissions
+     */
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class, 'user_id');
+    }
+    /**
+     * relation to user applications
+     */
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'user_id');
+    }
+    /**
+     * checks if this user has permission to an scope or not
+     * @param permission
+     * @return bool
+     */
+    public function hasPermission(string $permission): bool
+    {
+        return $this->permissions()->whereScope($permission)->count() > 0;
+    }
 }
