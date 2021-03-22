@@ -15,7 +15,6 @@ class Profile extends JsonResource
         $result = [
             'id' => $this->id,
             'username' => $this->username,
-            'password' => $this->password,
             'email' => [
                 'address' => $this->email,
                 'verified' => $this->email_verified_at != 0,
@@ -26,7 +25,10 @@ class Profile extends JsonResource
                 'verified' => $this->phone_verified_at != 0,
                 'verified_at' => $this->when($this->phone_verified_at != 0, 'phone_verified_at'),
             ],
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'avatar' => $this->getAvatarPublicUrl(),
+            'status' => $this->status,
         ];
         foreach ($this->data as $key => $value) {
             $result[$key] = $value;

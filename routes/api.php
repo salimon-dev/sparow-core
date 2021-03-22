@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Applications;
 use App\Http\Controllers\Api\Broker;
+use App\Http\Controllers\Api\Permissions;
 use App\Http\Controllers\Api\Plain;
 use App\Http\Controllers\Api\Profile;
 use App\Http\Controllers\Api\RedirectUrls;
@@ -20,23 +21,26 @@ Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function (
             Route::get('/', [Profile::class, 'get'])->name('get');
             Route::post('/', [Profile::class, 'update'])->name('update');
         });
+        Route::name('permissions.')->prefix('permissions')->group(function () {
+            Route::get("/", [Permissions::class, "mine"])->name("mine");
+        });
         Route::name("sessions.")->prefix("/sessions")->group(function () {
             Route::get("/", [Sessions::class, "list"])->name("list");
             Route::delete("/all-but-me", [Sessions::class, "deleteAllButMe"])->name("deleteAllButMe");
             Route::delete("/{token}", [Sessions::class, "delete"])->name("delete");
         });
-        Route::name("applications.")->prefix("/applications")->group(function () {
-            Route::get("/", [Applications::class, "index"])->name("index")->middleware("can:index");
-            Route::post("/", [Applications::class, "create"])->name("create")->middleware("can:create");
-            Route::post("/{application}", [Applications::class, "edit"])->name("edit")->middleware("can:update,application");
-            Route::delete("/{application}", [Applications::class, "delete"])->name("delete")->middleware("can:delete,application");
-            Route::post("/{application}/refresh-token", [Applications::class, "refreshToken"])->name("refreshToken")->middleware("can:refreshToken,application");
+        Route::name("applications.")->prefix("/applications")->middleware("hasPermission:applications")->group(function () {
+            Route::get("/", [Applications::class, "index"])->name("index");
+            Route::post("/", [Applications::class, "create"])->name("create");
+            Route::post("/{application}", [Applications::class, "edit"])->name("edit");
+            Route::delete("/{application}", [Applications::class, "delete"])->name("delete");
+            Route::post("/{application}/refresh-token", [Applications::class, "refreshToken"])->name("refreshToken");
         });
-        Route::name("redirect_urls")->prefix("/redirect-urls")->group(function () {
-            Route::get("/", [RedirectUrls::class, "index"])->name("index")->middleware("can:index");
-            Route::post("/", [RedirectUrls::class, "create"])->name("create")->middleware("can:create");
-            Route::post("/{redirect_url}", [RedirectUrls::class, "edit"])->name("edit")->middleware("can:edit,redirect_url");
-            Route::delete("/{redirect_url}", [RedirectUrls::class, "delete"])->name("delete")->middleware("can:delete,redirect_url");
+        Route::name("redirect_urls")->prefix("/redirect-urls")->middleware("hasPermission:applications")->group(function () {
+            Route::get("/", [RedirectUrls::class, "index"])->name("index");
+            Route::post("/", [RedirectUrls::class, "create"])->name("create");
+            Route::post("/{redirect_url}", [RedirectUrls::class, "edit"])->name("edit");
+            Route::delete("/{redirect_url}", [RedirectUrls::class, "delete"])->name("delete");
         });
         Route::post('/logout', [Profile::class, 'logout'])->name('logout');
     });

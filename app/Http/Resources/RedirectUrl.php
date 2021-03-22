@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Session extends JsonResource
+class RedirectUrl extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,7 @@ class Session extends JsonResource
         return [
             'id' => $this->id,
             'application' => Application::make($this->application),
-            'agent' => $this->agent,
-            'name' => $this->name,
-            'scopes' => $this->scopes,
+            'url' => $this->url,
         ];
-        return parent::toArray($request);
     }
 }

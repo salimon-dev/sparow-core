@@ -25,7 +25,7 @@ class Index extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'nullable|string|uuid',
+            'id' => 'nullable|uuid',
         ];
     }
 }

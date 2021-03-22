@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,7 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $user = User::create([
             'username' => "blue_rabbit",
             "password" => md5("blue_rabbit_password"),
             "email" => "sparow@salimon.ir",
@@ -24,6 +25,14 @@ class UsersSeeder extends Seeder
             "avatar" => "blue-rabbit.png",
             "status" => "active",
             "can_create_client" => true,
+        ]);
+        Permission::create([
+            'user_id' => $user->id,
+            'scope' => 'applications',
+        ]);
+        Permission::create([
+            'user_id' => $user->id,
+            'scope' => 'permissions',
         ]);
     }
 }

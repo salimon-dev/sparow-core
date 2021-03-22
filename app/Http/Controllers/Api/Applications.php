@@ -16,9 +16,6 @@ class Applications extends Controller
 
     public function index(Index $request)
     {
-        if (Auth::user()->hasPermission('applications')) {
-            return abort(403, "you don't have permission to manage applications");
-        }
         $applications = Application::mine();
         if ($request->exists('id') && $request->id) {
             $applications = $applications->where('id', $request->id);
@@ -28,9 +25,6 @@ class Applications extends Controller
 
     public function create(Create $request)
     {
-        if (Auth::user()->hasPermission('applications')) {
-            return abort(403, "you don't have permission to manage applications");
-        }
         $application = new Application;
         $application->fill($request->only(['title', 'description']) + [
             'user_id' => Auth::user()->id
@@ -42,9 +36,6 @@ class Applications extends Controller
 
     public function edit(Edit $request, Application $application)
     {
-        if (Auth::user()->hasPermission('applications')) {
-            return abort(403, "you don't have permission to manage applications");
-        }
         $application->fill($request->only(['title', 'description']));
         $application->save();
         return ResourcesApplication::make($application);
@@ -52,18 +43,12 @@ class Applications extends Controller
 
     public function delete(Request $request, Application $application)
     {
-        if (Auth::user()->hasPermission('applications')) {
-            return abort(403, "you don't have permission to manage applications");
-        }
         $application->delete();
         return 'ok';
     }
 
     public function refreshToken(Request $request, Application $application)
     {
-        if (Auth::user()->hasPermission('applications')) {
-            return abort(403, "you don't have permission to manage applications");
-        }
         $application->regenerateTokens();
         $application->save();
         return ResourcesApplication::make($application);
