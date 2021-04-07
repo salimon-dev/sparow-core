@@ -12,10 +12,23 @@ class Sessions extends Controller
 {
     public function list(Request $request)
     {
-        return Session::collection(Auth::user()->tokens()->paginate());
+        $tokens = Auth::user()->tokens();
+        if ($request->exists("current") && $request->current) { // return current token
+            $current_token = Auth::user()->token();
+            $tokens = $tokens->where('id', $current_token->id);
+        }
+        if ($request->exists("others") && $request->others) { // return other tokens
+            $current_token = Auth::user()->token();
+            $tokens = $tokens->where('id', "<>", $current_token->id);
+        }
+        return Session::collection($tokens->paginate());
     }
     public function delete(Request $request, Token $token)
     {
+        $current_token = Auth::user()->token();
+        if ($token->id == $current_token->id) {
+            return abort(403, "you can't remove your current token");
+        }
         $token->delete();
         return 'ok';
     }
