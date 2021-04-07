@@ -42,7 +42,8 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensCan([
             "info" => "info",
             "payment" => "payment",
-            "applications" => "applications"
+            "applications" => "applications",
+            "permissions" => "permissions",
         ]);
 
         Passport::setDefaultScope([

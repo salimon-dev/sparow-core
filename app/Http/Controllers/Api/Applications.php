@@ -20,6 +20,9 @@ class Applications extends Controller
         if ($request->exists('id') && $request->id) {
             $applications = $applications->where('id', $request->id);
         }
+        if ($request->exists("title") && $request->title) {
+            $applications = $applications->where("title", "%" . $request->title . "%");
+        }
         return ResourcesApplication::collection($applications->paginate());
     }
 

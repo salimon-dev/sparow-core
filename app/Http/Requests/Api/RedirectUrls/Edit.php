@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api\RedirectUrls;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class Create extends FormRequest
+class Edit extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,8 @@ class Create extends FormRequest
     public function rules()
     {
         return [
-            "application_id" => "required|uuid|hasAccessToApplication",
-            "url" => "required|string",
+            "application_id" => "nullable|uuid",
+            "url" => "nullable|string",
         ];
     }
 }
