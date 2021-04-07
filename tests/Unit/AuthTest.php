@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -51,7 +52,7 @@ class AuthTest extends TestCase
             "username" => "some_other_user",
             "password" => "some",
             "email" => "blue-rabbit@salimon.ir",
-            "phone" => "09111111111"
+            "phone" => "09111111111",
         ]);
         $response->assertStatus(422);
     }
@@ -62,7 +63,8 @@ class AuthTest extends TestCase
             "password" => "some_password",
             "email" => "blue-rabbit@salimon.ir",
             "phone" => "09111111111",
-            "agent" => "php unit test"
+            "agent" => "php unit test",
+            "avatar" => UploadedFile::fake()->image("avatar.jpg", 128, 128)
         ]);
         $response->assertStatus(201);
     }

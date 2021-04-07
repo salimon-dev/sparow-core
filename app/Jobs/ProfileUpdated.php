@@ -56,9 +56,6 @@ class ProfileUpdated implements ShouldQueue
                 'Content-Type: application/json'
             ),
         ));
-
-        $response = curl_exec($curl);
-
-        \Log::info($response);
+        curl_exec($curl);
     }
 }

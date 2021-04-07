@@ -7,6 +7,7 @@ use App\Http\Requests\Api\UpdateProfile;
 use App\Http\Resources\Profile as ResourcesProfile;
 use App\Jobs\ProfileUpdated;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Profile extends Controller
 {

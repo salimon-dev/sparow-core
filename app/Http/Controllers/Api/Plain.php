@@ -37,7 +37,8 @@ class Plain extends Controller
         $user->fill($request->only(['username', 'phone', 'email', 'first_name', 'last_name']));
         $user->password = md5($request->password);
         if ($request->hasFile('avatar')) {
-            $user->avatar = Storage::disk('arvan-s3')->put('/avatars', $request->file('avatar'));
+            $avatar = Storage::disk('arvan-s3')->put('/avatars', $request->file('avatar'));
+            $user->avatar = $avatar;
         }
         $user->save();
         $token = $user->customCreateToken($request->input('application', 'direct'), $request->input("scopes", []), null, $request->agent);
