@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Plain\Login as LoginRequest;
 use App\Http\Requests\Api\Plain\Register as RegisterRequest;
 use App\Http\Resources\Profile as Profile;
 use App\Models\Application;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,6 +43,10 @@ class Plain extends Controller
         }
         $user->save();
         $token = $user->customCreateToken($request->input('application', 'direct'), $request->input("scopes", []), null, $request->agent);
+        Permission::create([
+            "user_id" => $user->id,
+            "scope" => "applications",
+        ]);
         return new Profile($user, [
             'access_token' => $token->accessToken,
             'expires_at' => $token->token->expires_at->timestamp,

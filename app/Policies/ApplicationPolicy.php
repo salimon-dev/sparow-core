@@ -20,6 +20,7 @@ class ApplicationPolicy
     public function create(User $user)
     {
         $permission = Permission::where('user_id', $user->id)->where('scope', 'applications')->first();
+        \Log::info($permission);
         if (!$permission) {
             return Response::deny("you don't have permission to applications", 403);
         }

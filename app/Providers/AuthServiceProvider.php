@@ -9,7 +9,11 @@ use App\Models\Passport\AuthCode;
 use App\Models\Passport\Client;
 use App\Models\Passport\PersonalAccessClient;
 use App\Models\Passport\Token;
+use App\Models\RedirectUrl;
+use App\Models\ValidDomain;
 use App\Policies\ApplicationPolicy;
+use App\Policies\RedirectUrlPolicy;
+use App\Policies\ValidDomainPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Application::class => ApplicationPolicy::class,
+        RedirectUrl::class => RedirectUrlPolicy::class,
+        ValidDomain::class => ValidDomainPolicy::class,
     ];
 
     /**
