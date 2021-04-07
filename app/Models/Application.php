@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class Application extends Model
 {
     use HasFactory, Uuids;
+    protected $table = 'applications';
     protected $fillable = ['title', 'description', 'secret_token', 'public_token', 'user_id'];
     /**
      * returns applications belongs to authorized user

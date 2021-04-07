@@ -9,6 +9,7 @@ use App\Http\Requests\Api\RedirectUrls\Index;
 use App\Http\Resources\RedirectUrl as ResourcesRedirectUrl;
 use App\Models\Application;
 use App\Models\RedirectUrl;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RedirectUrls extends Controller
@@ -19,7 +20,10 @@ class RedirectUrls extends Controller
         $redirect_urls = RedirectUrl::whereHas('application', function ($query) {
             return $query->mine();
         });
-        return $redirect_urls->get();
+        if ($request->has('application_id') && $request->application) {
+            $redirect_urls = $redirect_urls->where('application_id', $request->application_id);
+        }
+        return ResourcesRedirectUrl::collection($redirect_urls->paginate());
     }
     public function create(Create $request)
     {
@@ -34,5 +38,11 @@ class RedirectUrls extends Controller
     {
         $redirect_url->fill($request->only(['url', 'application_id']))->save();
         return ResourcesRedirectUrl::make($redirect_url);
+    }
+    public function delete(Request $request, RedirectUrl $redirect_url)
+    {
+        \Log::info('testing');
+        $redirect_url->delete();
+        return 'ok';
     }
 }
