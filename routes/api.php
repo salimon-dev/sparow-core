@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Plain;
 use App\Http\Controllers\Api\Profile;
 use App\Http\Controllers\Api\RedirectUrls;
 use App\Http\Controllers\Api\Sessions;
+use App\Http\Controllers\Api\ValidDomains;
 use Illuminate\Support\Facades\Route;
 
 Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function () {
@@ -31,16 +32,22 @@ Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function (
         });
         Route::name("applications.")->prefix("/applications")->middleware("hasPermission:applications")->group(function () {
             Route::get("/", [Applications::class, "index"])->name("index");
-            Route::post("/", [Applications::class, "create"])->name("create");
-            Route::post("/{application}", [Applications::class, "edit"])->name("edit");
-            Route::delete("/{application}", [Applications::class, "delete"])->name("delete");
-            Route::post("/{application}/refresh-token", [Applications::class, "refreshToken"])->name("refreshToken");
+            Route::post("/", [Applications::class, "create"])->name("create")->middleware("can:create");
+            Route::post("/{application}", [Applications::class, "edit"])->name("edit")->middleware("can:edit,application");
+            Route::delete("/{application}", [Applications::class, "delete"])->name("delete")->middleware("can:delete,application");
+            Route::post("/{application}/refresh-token", [Applications::class, "refreshToken"])->name("refreshToken")->middleware("can:edit,application");
         });
         Route::name("redirect_urls")->prefix("/redirect-urls")->middleware("hasPermission:applications")->group(function () {
             Route::get("/", [RedirectUrls::class, "index"])->name("index");
-            Route::post("/", [RedirectUrls::class, "create"])->name("create");
-            Route::post("/{redirect_url}", [RedirectUrls::class, "edit"])->name("edit");
-            Route::delete("/{redirect_url}", [RedirectUrls::class, "delete"])->name("delete");
+            Route::post("/", [RedirectUrls::class, "create"])->name("create")->middleware("can:create");
+            Route::post("/{redirect_url}", [RedirectUrls::class, "edit"])->name("edit")->middleware("can:edit,redirect_url");
+            Route::delete("/{redirect_url}", [RedirectUrls::class, "delete"])->name("delete")->middleware("can:delete,redirect_url");
+        });
+        Route::name("valid_domains")->prefix("/valid-domains")->middleware("hasPermission:applications")->group(function () {
+            Route::get("/", [ValidDomains::class, "index"])->name("index");
+            Route::post("/", [ValidDomains::class, "create"])->name("create")->middleware("can:create");
+            Route::post("/{valid_domain}", [ValidDomains::class, "edit"])->name("edit")->middleware("can:edit,valid_domain");
+            Route::delete("/{valid_domain}", [ValidDomains::class, "delete"])->name("delete")->middleware("can:delete,valid_domain");
         });
         Route::post('/logout', [Profile::class, 'logout'])->name('logout');
     });
