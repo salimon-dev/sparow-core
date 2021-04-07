@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class SessionsTest extends TestCase
