@@ -28,6 +28,7 @@ class Profile extends JsonResource
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'avatar' => $this->getAvatarPublicUrl(),
+            'uploaded_avatar' => $this->hasAvatar(),
             'status' => $this->status,
         ];
         foreach ($this->data as $key => $value) {

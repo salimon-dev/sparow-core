@@ -35,6 +35,10 @@ class User extends Authenticatable
             return (env('AWS_PATH') . '/' . $this->avatar);
         else return url("sample-avatar.png");
     }
+    public function hasAvatar(): bool
+    {
+        return $this->avatar != null;
+    }
     /**
      * updates avatar from given file
      */
