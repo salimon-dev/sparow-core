@@ -33,7 +33,7 @@ class User extends Authenticatable
     {
         if ($this->avatar)
             return (env('AWS_PATH') . '/' . $this->avatar);
-        else return url("sample-avatar.png");
+        else return url("sample-avatar.svg");
     }
     public function hasAvatar(): bool
     {
