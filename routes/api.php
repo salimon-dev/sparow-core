@@ -14,7 +14,7 @@ header('Access-Control-Allow-Methods: *');
 header('Access-Control-Allow-Headers: *');
 header('Access-Control-Allow-Origin: *');
 
-Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function () {
+Route::namespace('Api')->middleware(['json.response'])->group(function () {
     Route::name('register.')->prefix('register')->group(function () {
         Route::post('/plain', [Plain::class, 'register'])->name('plain');
     });
