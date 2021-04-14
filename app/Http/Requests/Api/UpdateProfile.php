@@ -31,7 +31,7 @@ class UpdateProfile extends FormRequest
             'password' => 'nullable|string',
             'email' => ['nullable', 'email', 'max:64', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:20', Rule::unique('users')->ignore($user->id)],
-            'avatar' => 'nullable|file|max:2500|dimensions=ratio=1/1',
+            'avatar' => ['nullable', 'file', 'max:2500', Rule::dimensions()->ratio("1")],
             'first_name' => 'nullable|string|max:64',
             'last_name' => 'nullable|string|max:64',
         ];
