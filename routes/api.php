@@ -10,6 +10,10 @@ use App\Http\Controllers\Api\Sessions;
 use App\Http\Controllers\Api\ValidDomains;
 use Illuminate\Support\Facades\Route;
 
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Origin: *');
+
 Route::namespace('Api')->middleware(['cors', 'json.response'])->group(function () {
     Route::name('register.')->prefix('register')->group(function () {
         Route::post('/plain', [Plain::class, 'register'])->name('plain');
