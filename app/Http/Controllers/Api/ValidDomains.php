@@ -23,7 +23,7 @@ class ValidDomains extends Controller
         if ($request->has('application_id') && $request->application) {
             $redirect_urls = $redirect_urls->where('application_id', $request->application_id);
         }
-        return ResourcesValidDomain::collection($redirect_urls->paginate());
+        return ResourcesValidDomain::collection($redirect_urls->paginate($request->input("pageSize", 15)));
     }
     public function create(Create $request)
     {

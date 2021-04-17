@@ -21,7 +21,7 @@ class Sessions extends Controller
             $current_token = Auth::user()->token();
             $tokens = $tokens->where('id', "<>", $current_token->id);
         }
-        return Session::collection($tokens->paginate());
+        return Session::collection($tokens->paginate($request->input("pageSize", 15)));
     }
     public function delete(Request $request, Token $token)
     {

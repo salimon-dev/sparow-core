@@ -23,7 +23,7 @@ class Applications extends Controller
         if ($request->exists("title") && $request->title) {
             $applications = $applications->where("title", "%" . $request->title . "%");
         }
-        return ResourcesApplication::collection($applications->paginate());
+        return ResourcesApplication::collection($applications->paginate($request->input("pageSize", 15)));
     }
 
     public function create(Create $request)

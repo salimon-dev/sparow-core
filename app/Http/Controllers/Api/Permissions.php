@@ -10,6 +10,6 @@ class Permissions extends Controller
 {
     public function mine()
     {
-        return ResourcesPermission::collection(Permission::mine()->paginate());
+        return ResourcesPermission::collection(Permission::mine()->paginate($request->input("pageSize", 15)));
     }
 }
