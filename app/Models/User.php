@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Passport\CustomizedCreateToken;
-use App\Traits\Paginate;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +12,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, Uuids, HasApiTokens, CustomizedCreateToken, Paginate;
+    use HasFactory, Notifiable, Uuids, HasApiTokens, CustomizedCreateToken;
 
     protected $fillable = [
         'username', 'email', 'phone', 'first_name', 'last_name', 'avatar', 'phone_verified_at', 'email_verified_at', 'last_login', 'status'

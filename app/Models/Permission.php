@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\Paginate;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Permission extends Model
 {
-    use HasFactory, Uuids, Paginate;
+    use HasFactory, Uuids;
     protected $primary = 'id';
     protected $table = 'permissions';
     protected $fillable = ['user_id', 'scope'];
