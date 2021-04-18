@@ -49,6 +49,7 @@ class AuthServiceProvider extends ServiceProvider
             "info" => "info",
             "payment" => "payment",
             "applications" => "applications",
+            "sessionts" => "sessions",
             "permissions" => "permissions",
         ]);
 
