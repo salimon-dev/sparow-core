@@ -27,6 +27,7 @@ class PersonalAccessTokenFactory extends ParentClass
                 'application_id' => $application_id,
                 'agent' => $agent,
                 'ip' => $ip,
+                'last_request' => time()
             ]));
         });
         return new PersonalAccessTokenResult(
