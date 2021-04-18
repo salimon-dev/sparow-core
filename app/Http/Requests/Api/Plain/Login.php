@@ -30,7 +30,6 @@ class Login extends FormRequest
             'application_token' => 'nullable|string|max:256',
             'scopes' => 'nullable|array',
             'scopes.*' => 'required|string',
-            'agent' => 'required|string|max:128',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Plain;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class Register extends FormRequest
 {
@@ -33,7 +34,6 @@ class Register extends FormRequest
             'application_token' => 'nullable|string|max:256',
             'scopes' => 'nullable|array',
             'scopes.*' => 'required|string',
-            'agent' => 'required|string|max:128',
         ];
     }
 }

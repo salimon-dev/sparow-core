@@ -15,17 +15,18 @@ class PersonalAccessTokenFactory extends ParentClass
      * @param  array  $scopes
      * @return \Laravel\Passport\PersonalAccessTokenResult
      */
-    public function customMake($userId, $name, array $scopes = [], $application_id, $agent)
+    public function customMake($userId, $name, array $scopes = [], $application_id, $agent, $ip)
     {
         $response = $this->dispatchRequestToAuthorizationServer(
             $this->createRequest($this->clients->personalAccessClient(), $userId, $scopes)
         );
-        $token = tap($this->findAccessToken($response), function ($token) use ($userId, $name, $application_id, $agent) {
+        $token = tap($this->findAccessToken($response), function ($token) use ($userId, $name, $application_id, $agent, $ip) {
             $this->tokens->save($token->forceFill([
                 'user_id' => $userId,
                 'name' => $name,
                 'application_id' => $application_id,
                 'agent' => $agent,
+                'ip' => $ip,
             ]));
         });
         return new PersonalAccessTokenResult(

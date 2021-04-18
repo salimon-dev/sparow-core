@@ -13,7 +13,7 @@ trait CustomizedCreateToken
      * @param  array  $scopes
      * @return \Laravel\Passport\PersonalAccessTokenResult
      */
-    public function customCreateToken($name, array $scopes = [], $application_id, $agent)
+    public function customCreateToken($name, array $scopes = [], $application_id, $agent, $ip)
     {
         return Container::getInstance()->make(PersonalAccessTokenFactory::class)->customMake(
             $this->getKey(),
@@ -21,6 +21,7 @@ trait CustomizedCreateToken
             $scopes,
             $application_id,
             $agent,
+            $ip,
         );
     }
 }

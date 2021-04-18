@@ -20,6 +20,7 @@ class Session extends JsonResource
             'id' => $this->id,
             'application' => Application::make($this->application),
             'agent' => $this->agent,
+            'ip' => $this->ip,
             'name' => $this->name,
             'scopes' => $this->scopes,
             'current' => $current_token->id == $this->id

@@ -22,9 +22,9 @@ class Plain extends Controller
             $token = null;
             if ($request->has('application_token')) {
                 $application = Application::where('public_token', $request->application_token)->firstOrFail();
-                $token = $user->customCreateToken($request->input('application', 'direct'), $request->input('scopes', []), $application->id, $request->agent);
+                $token = $user->customCreateToken($request->input('application', 'direct'), $request->input('scopes', []), $application->id, $request->userAgent(), $request->ip());
             } else {
-                $token = $user->customCreateToken($request->input('application', 'direct'), $request->input('scopes', []), null, $request->agent);
+                $token = $user->customCreateToken($request->input('application', 'direct'), $request->input('scopes', []), null, $request->userAgent(), $request->ip());
             }
             return new Profile($user, [
                 'access_token' => $token->accessToken,
@@ -42,7 +42,7 @@ class Plain extends Controller
             $user->avatar = $avatar;
         }
         $user->save();
-        $token = $user->customCreateToken($request->input('application', 'direct'), $request->input("scopes", []), null, $request->agent);
+        $token = $user->customCreateToken($request->input('application', 'direct'), $request->input("scopes", []), null, $request->userAgent(), $request->ip());
         Permission::create([
             "user_id" => $user->id,
             "scope" => "applications",
